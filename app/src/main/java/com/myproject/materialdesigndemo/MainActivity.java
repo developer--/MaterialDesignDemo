@@ -1,5 +1,9 @@
 package com.myproject.materialdesigndemo;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -22,10 +26,13 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        view = findViewById(R.id.sun_btn_id);
 
         initToolbar();
 
@@ -35,10 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         initDrawer();
 
-
         initnavigationView();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void startScrollingActivity(View view){
+        Intent intent = new Intent(this, PaletteActivity.class);
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,view, "my_transition");
+        startActivity(intent, options.toBundle());
+    }
 
     private void initFabButton(){
         myFabButton = (FloatingActionButton) findViewById(R.id.fab_button_id);
